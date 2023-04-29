@@ -1,0 +1,23 @@
+version: '3'
+services:
+  app:
+    build:
+      context: .
+      target: dev
+      dockerfile: Dockerfile
+    command: >
+      sh -c '
+        npm run dev
+      '
+    tty: true # コンテナの永続化
+    container_name: message-app-client
+    #restart: always
+    volumes:
+      - ./:/app
+    environment:
+      - WATCHPACK_POLLING=true
+    env_file: .development.docker.env
+    ports:
+      - "3000:3000"
+volumes:
+  data-volume:
